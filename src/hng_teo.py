@@ -13,18 +13,7 @@ arm.motion_enable(enable=True)
 arm.set_mode(0)
 arm.set_state(state=0)
 
-Z_MASINA = 1.4
-
-arm.open_lite6_gripper()
-arm.set_position(x=267, y=228, z=68, wait=True, roll=180, pitch=0, yaw=0)
-
-
-
-arm.set_position(x=267, y=228, z=Z_MASINA, wait=True, roll=180, pitch=0, yaw=0)
-time.sleep(1)
-
-arm.close_lite6_gripper()
-time.sleep(1)
+Z_MASINA = 1.3
 
 arm.set_position(x=190, y=-36, z=405, wait=True, roll=180, pitch=0, yaw=0)
 
@@ -172,6 +161,18 @@ while True:
     if key == 27:  # Esc
         break
     if key == 13 and simplified_list and not is_moving:  # Enter
+        
+        arm.open_lite6_gripper()
+        arm.set_position(x=267, y=228, z=68, wait=True, roll=180, pitch=0, yaw=0)
+
+        arm.set_position(x=267, y=228, z=Z_MASINA, wait=True, roll=180, pitch=0, yaw=0)
+        time.sleep(1)
+
+        arm.close_lite6_gripper()
+        time.sleep(1)
+        
+        arm.set_position(x=267, y=228, z=68, wait=True, roll=180, pitch=0, yaw=0)
+        
         is_moving = True
         gcode = generate_gcode(simplified_list, dstW, dstH)
         for cmd in gcode:
@@ -181,13 +182,14 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-arm.set_position(x=267, y=228, z=45, wait=True, roll=180, pitch=0, yaw=0)
+arm.set_position(x=267, y=228, z=68, wait=True, roll=180, pitch=0, yaw=0)
+
 arm.set_position(x=267, y=228, z=Z_MASINA, wait=True, roll=180, pitch=0, yaw=0)
 time.sleep(1)
 
 arm.open_lite6_gripper()
 time.sleep(1)
 
-arm.set_position(x=267, y=228, z=45, wait=True, roll=180, pitch=0, yaw=0)
+arm.set_position(x=267, y=228, z=68, wait=True, roll=180, pitch=0, yaw=0)
 arm.move_gohome(wait=True)
 arm.motion_enable(enable=False)
